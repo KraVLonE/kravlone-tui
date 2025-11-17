@@ -1,0 +1,29 @@
+{
+  "name": "kravlone",
+  "version": "1.0.0",
+  "description": "A terminal-based portfolio card (npx kravlone) featuring projects, skills, and links.",
+  "main": "index.js",
+  "keywords": [
+    "tui",
+    "cli",
+    "portfolio",
+    "card",
+    "npx",
+    "javascript"
+  ],
+  "author": "KraVLonE",
+  "license": "ISC",
+  "type": "module",
+  "bin": {
+    "kravlone": "./index.js"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "figlet": "^1.9.4",
+    "gradient-string": "^3.0.0",
+    "inquirer": "^12.11.1",
+    "open": "^11.0.0"
+  }
+}
