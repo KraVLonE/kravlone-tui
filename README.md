@@ -4,7 +4,7 @@ A sleek and interactive terminal portfolio card for **KraVLonE**, built with Nod
 
 This project uses modern TUI (Terminal User Interface) tools like **Chalk**, **Figlet**, and **Inquirer** to deliver an engaging experience directly in your command line.
 
-## 🚀 Usage
+## Usage
 
 To view the card, simply run the following command in your terminal:
 
