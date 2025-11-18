@@ -8,6 +8,7 @@ import open from "open";
 import fs from "fs";
 import path from "path";
 import axios from "axios";
+import readline from "readline";
 
 let lastMenuIndex = 0;
 
@@ -47,7 +48,7 @@ async function safePrompt(promptFn) {
   } catch (err) {
     if (err?.name === "ExitPromptError") {
       console.clear();
-      console.log(chalk.hex("#00FFFF")("\nGoodbye, hacker! 👋\n"));
+      console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor ! 👋\n"));
       process.exit(0);
     }
     throw err;
@@ -94,27 +95,76 @@ function card(content) {
   });
 }
 
-function waitForBack() {
+async function waitForBack({ drainTimeout = 60 } = {}) {
+  function safeSetRawMode(value) {
+    try {
+      if (process.stdin.isTTY) process.stdin.setRawMode(value);
+    } catch (e) {
+    }
+  }
+
+  process.stdin.resume();
+  safeSetRawMode(false);
+
+  await new Promise((resolve) => {
+    let timer = null;
+    const onData = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        process.stdin.removeListener("data", onData);
+        resolve();
+      }, drainTimeout);
+    };
+
+    timer = setTimeout(() => {
+      process.stdin.removeListener("data", onData);
+      resolve();
+    }, drainTimeout);
+
+    process.stdin.on("data", onData);
+  });
+
   return new Promise((resolve) => {
-    process.stdin.setRawMode(true);
+    safeSetRawMode(true);
     process.stdin.resume();
 
-    const listener = (key) => {
-      const k = key.toString();
-
-      if (k === "\u001b" || k === "\u007f") {
-        process.stdin.setRawMode(false);
-        process.stdin.removeListener("data", listener);
-        return resolve();
-      }
-      if (k === "\u0003") {
+    const onData = (chunk) => {
+      const b0 = chunk && chunk.length ? chunk[0] : null;
+      // Ctrl + C
+      if (b0 === 0x03) {
+        cleanup();
         console.clear();
-        console.log(chalk.hex("#00FFFF")("\nGoodbye, hacker! 👋"));
-        process.exit();
+        console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor ! 👋"));
+        process.exit(0);
+      }
+
+      // ESC, Backspace
+      if (b0 === 0x1b || b0 === 0x7f || b0 === 0x08) {
+        cleanup();
+        return resolve();
       }
     };
 
-    process.stdin.on("data", listener);
+    const cleanup = () => {
+      try { process.stdin.removeListener("data", onData); } catch (e) {}
+      safeSetRawMode(false);
+      try { process.stdin.pause(); } catch (e) {}
+    };
+
+    process.stdin.on("data", onData);
+
+    const watchdog = setTimeout(() => {
+      try { process.stdin.removeListener("data", onData); } catch (_) {}
+      safeSetRawMode(false);
+      try { process.stdin.pause(); } catch (_) {}
+      resolve();
+    }, 10 * 60 * 1000);
+
+    const originalResolve = resolve;
+    resolve = (...args) => {
+      clearTimeout(watchdog);
+      originalResolve(...args);
+    };
   });
 }
 
@@ -323,7 +373,7 @@ async function mainMenu() {
 
   if (ans.menu === "exit") {
     console.clear();
-    console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor! 👋"));
+    console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor ! 👋"));
     process.exit(0);
   }
 }
