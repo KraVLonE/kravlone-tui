@@ -12,20 +12,31 @@ import readline from "readline";
 
 let lastMenuIndex = 0;
 
+const icons = {
+  about:    "*",
+  skills:   "+",
+  projects: "#",
+  linux:    ">",
+  links:    "@",
+  resume:   "V",
+  email:    "E",
+  exit:     "X",
+  pointer:  ">"
+};
+
 const MENU_CHOICES = [
   new inquirer.Separator(),
-  { name: `${chalk.hex("#00FFFF")("◈")}  About Me`, value: "about" },
-  { name: `${chalk.hex("#00FFFF")("♦")}  Skills`, value: "skills" },
-  { name: `${chalk.hex("#00FFFF")("▧")}  Projects`, value: "projects" },
-  { name: `${chalk.hex("#00FFFF")("⌘")}  Linux Stuff`, value: "linux" },
-  { name: `${chalk.hex("#00FFFF")("∞")}  Social Links`, value: "links" },
+  { name: `${chalk.hex("#00FFFF")(icons.about)}  About Me`, value: "about" },
+  { name: `${chalk.hex("#00FFFF")(icons.skills)}  Skills`, value: "skills" },
+  { name: `${chalk.hex("#00FFFF")(icons.projects)}  Projects`, value: "projects" },
+  { name: `${chalk.hex("#00FFFF")(icons.linux)}  Linux Stuff`, value: "linux" },
+  { name: `${chalk.hex("#00FFFF")(icons.links)}  Social Links`, value: "links" },
   new inquirer.Separator(),
-  { name: `${chalk.greenBright("⬇")}  Download Resume`, value: "resume" },
-  { name: `${chalk.yellowBright("✉")}  Send Email`, value: "email" },
+  { name: `${chalk.greenBright(icons.resume)}  Download Resume`, value: "resume" },
+  { name: `${chalk.yellowBright(icons.email)}  Send Email`, value: "email" },
   new inquirer.Separator(),
-  { name: chalk.red("✖  Exit"), value: "exit" }
+  { name: chalk.red(`${icons.exit}  Exit`), value: "exit" }
 ];
-
 
 async function loadCardData() {
   const url = "https://gist.githubusercontent.com/KraVLonE/b8d4e2f939beab1b2c3dd617a5385ac5/raw/krav-card.json"
@@ -48,7 +59,7 @@ async function safePrompt(promptFn) {
   } catch (err) {
     if (err?.name === "ExitPromptError") {
       console.clear();
-      console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor ! 👋\n"));
+      console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor !\n"));
       process.exit(0);
     }
     throw err;
@@ -154,8 +165,7 @@ function clickableLink(text, url) {
 
 function showAbout() {
   console.log(
-    card(`
-${chalk.hex("#00FFFF")("► Name")}        : ${data.about.name}
+    card(`${chalk.hex("#00FFFF")("► Name")}        : ${data.about.name}
 ${chalk.hex("#00FFFF")("► Role")}        : ${data.about.role}
 ${chalk.hex("#00FFFF")("► Philosophy")}  : ${data.about.philosophy}
 
@@ -239,118 +249,59 @@ function showLinux() {
 async function mainMenu() {
   console.clear();
   printTitle();
-  
+
   const ans = await safePrompt(() =>
-    inquirer.prompt([
-      {
-        type: "list",
-        name: "menu",
-        message: chalk.hex("#E90074")("Choose an option:"),
-        choices: MENU_CHOICES,
-        default: MENU_CHOICES[lastMenuIndex]?.value,
-        pageSize : 20
-      }
-    ])
+    inquirer.prompt([{
+      type: "list",
+      name: "menu",
+      message: chalk.hex("#E90074")("Choose an option:"),
+      choices: MENU_CHOICES,
+      default: MENU_CHOICES[lastMenuIndex]?.value,
+      pageSize: 20
+    }])
   );
 
   lastMenuIndex = MENU_CHOICES.findIndex((c) => c.value === ans.menu);
 
-  if (ans.menu === "about") {
-    console.clear();
-    printTitle();
-    showAbout();
-    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
-    await waitForBack();
-    return mainMenu();
-  }
-
-  if (ans.menu === "skills") {
-    console.clear();
-    printTitle();
-    showSkills();
-    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
-    await waitForBack();
-    return mainMenu();
-  }
-  
-  if (ans.menu === "projects") {
-    console.clear();
-    printTitle();
-    showProjects();
-    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
-    await waitForBack();
-    return mainMenu();
-  }
-  
-  if (ans.menu === "linux") {
-    console.clear();
-    printTitle();
-    showLinux();
-    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
-    await waitForBack();
-    return mainMenu();
-  }
-
-  if (ans.menu === "links") {
-    console.clear();
-    printTitle();
-    showLinks();
-    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
-    await waitForBack();
-    return mainMenu();
-  }
-
-  if (ans.menu === "resume") {
-    console.clear();
-    printTitle();
-    
-    console.log(
-      card(`
-  ${chalk.hex("#00FFFF")("Resume Download")}
-  Click the link below to download:
-  
-  ${clickableLink(
-    "Download Resume",
-    data.resume.url
-  )}
-  `)
-    );
-    
-    await downloadResume();
-    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
-    await waitForBack();
-    return mainMenu();
-  }
-  
-  if (ans.menu === "email") {
-    console.clear();
-    printTitle();
-  
-    console.log(
-      card(`
-  ${chalk.hex("#00FFFF")("Send me an email")}
-  Click below or press ENTER in your browser:
-  
-  ${clickableLink(
-    "Email Me",
-    `mailto:${data.contact.email}?subject=Hello%20KraVLonE`
-  )}
-  `)
-    );
-  
-    await open(`mailto:${data.contact.email}?subject=Hello%20KraVLonE`);
-  
-    console.log(chalk.hex("#E90074")("\nPress ESC to go back"));
-    await waitForBack();
-    return mainMenu();
-  }
-  
-
   if (ans.menu === "exit") {
     console.clear();
-    console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor ! 👋"));
+    console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor !"));
     process.exit(0);
   }
+
+  console.clear();
+  printTitle();
+
+  switch (ans.menu) {
+    case "about":    showAbout(); break;
+    case "skills":   showSkills(); break;
+    case "projects": showProjects(); break;
+    case "linux":    showLinux(); break;
+    case "links":    showLinks(); break;
+    
+    case "resume":
+      console.log(card(`
+        ${chalk.hex("#00FFFF")("Resume Download")}
+        Click the link below to download:
+        ${clickableLink("Download Resume", data.resume.url)}
+      `));
+      await downloadResume();
+      break;
+
+    case "email":
+      const mailUrl = `mailto:${data.contact.email}?subject=Hello%20KraVLonE`;
+      console.log(card(`
+        ${chalk.hex("#00FFFF")("Send me an email")}
+        Click below or press ENTER in your browser:
+        ${clickableLink("Email Me", mailUrl)}
+      `));
+      await open(mailUrl);
+      break;
+  }
+
+  console.log(chalk.hex("#E90074")("\nPress ESC to go back"));
+  await waitForBack();
+  return mainMenu();
 }
 
 let data = await loadCardData();
