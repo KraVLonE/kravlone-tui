@@ -1,6 +1,6 @@
 {
   "name": "kravlone",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A terminal-based portfolio card (npx kravlone) featuring projects, skills, and links.",
   "main": "index.js",
   "keywords": [

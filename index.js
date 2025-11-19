@@ -14,16 +14,16 @@ let lastMenuIndex = 0;
 
 const MENU_CHOICES = [
   new inquirer.Separator(),
-  { name: "👤 About Me", value: "about" },
-  { name: "💡 Skills", value: "skills" },
-  { name: "💻 Projects", value: "projects" },
-  { name: "🐧 Linux Stuff", value: "linux" },
-  { name: "🔗 Social Links", value: "links" },
+  { name: `${chalk.hex("#00FFFF")("◈")}  About Me`, value: "about" },
+  { name: `${chalk.hex("#00FFFF")("♦")}  Skills`, value: "skills" },
+  { name: `${chalk.hex("#00FFFF")("▧")}  Projects`, value: "projects" },
+  { name: `${chalk.hex("#00FFFF")("⌘")}  Linux Stuff`, value: "linux" },
+  { name: `${chalk.hex("#00FFFF")("∞")}  Social Links`, value: "links" },
   new inquirer.Separator(),
-  { name: chalk.greenBright("📄 Download Resume"), value: "resume" },
-  { name: chalk.yellowBright("✉️  Send Email"), value: "email" },
+  { name: `${chalk.greenBright("⬇")}  Download Resume`, value: "resume" },
+  { name: `${chalk.yellowBright("✉")}  Send Email`, value: "email" },
   new inquirer.Separator(),
-  { name: chalk.red("🚀 Exit"), value: "exit" }
+  { name: chalk.red("✖  Exit"), value: "exit" }
 ];
 
 
@@ -59,19 +59,26 @@ async function downloadResume() {
   const url = data.resume.url;
   const filePath = path.join(process.cwd(), "KraVLonE-Resume.pdf");
 
-  const writer = fs.createWriteStream(filePath);
-  const resp = await axios.get(url, { responseType: "stream" });
-  resp.data.pipe(writer);
+  console.log(chalk.gray(`\nDownloading to ${filePath}...`));
 
-  writer.on("finish", () => {
-    console.log(`\n📄 Resume downloaded to: ${filePath}\n`);
-    open(filePath);
-  });
-  writer.on("error", (err) => {
-    console.error("❌ Download failed:", err);
-  });
+  try {
+    const writer = fs.createWriteStream(filePath);
+    const resp = await axios.get(url, { responseType: "stream" });
+    
+    resp.data.pipe(writer);
+
+    // Wrap the stream events in a Promise to actually await them
+    await new Promise((resolve, reject) => {
+      writer.on("finish", resolve);
+      writer.on("error", reject);
+    });
+
+    console.log(chalk.green(`✔ Resume downloaded successfully!`));
+    await open(filePath); // Wait for open to trigger
+  } catch (err) {
+    console.error(chalk.red("\n❌ Download failed:"), err.message);
+  }
 }
-
 
 // -----------------------------
 // UI HELPERS
@@ -95,76 +102,44 @@ function card(content) {
   });
 }
 
-async function waitForBack({ drainTimeout = 60 } = {}) {
-  function safeSetRawMode(value) {
-    try {
-      if (process.stdin.isTTY) process.stdin.setRawMode(value);
-    } catch (e) {
-    }
+async function waitForBack() {
+  // 1. Enable keypress events on stdin
+  readline.emitKeypressEvents(process.stdin);
+  
+  // 2. ensure raw mode is on so we catch individual characters
+  if (process.stdin.isTTY) {
+    process.stdin.setRawMode(true);
   }
-
-  process.stdin.resume();
-  safeSetRawMode(false);
-
-  await new Promise((resolve) => {
-    let timer = null;
-    const onData = () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        process.stdin.removeListener("data", onData);
-        resolve();
-      }, drainTimeout);
-    };
-
-    timer = setTimeout(() => {
-      process.stdin.removeListener("data", onData);
-      resolve();
-    }, drainTimeout);
-
-    process.stdin.on("data", onData);
-  });
+  process.stdin.resume(); // make sure stdin is flowing
 
   return new Promise((resolve) => {
-    safeSetRawMode(true);
-    process.stdin.resume();
-
-    const onData = (chunk) => {
-      const b0 = chunk && chunk.length ? chunk[0] : null;
-      // Ctrl + C
-      if (b0 === 0x03) {
-        cleanup();
+    // 3. Define the handler
+    const handler = (str, key) => {
+      // Handle Ctrl+C (Exit)
+      if (key.ctrl && key.name === 'c') {
         console.clear();
-        console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor ! 👋"));
+        console.log(chalk.hex("#00FFFF")("\nGoodbye, Kind Visitor ! 👋\n"));
         process.exit(0);
       }
 
-      // ESC, Backspace
-      if (b0 === 0x1b || b0 === 0x7f || b0 === 0x08) {
+      // Handle Escape, Backspace, or 'q' to go back
+      if (key.name === 'escape') {
         cleanup();
-        return resolve();
+        resolve();
       }
     };
 
+    // 4. Cleanup logic to remove listeners and restore state
     const cleanup = () => {
-      try { process.stdin.removeListener("data", onData); } catch (e) {}
-      safeSetRawMode(false);
-      try { process.stdin.pause(); } catch (e) {}
+      process.stdin.removeListener('keypress', handler);
+      if (process.stdin.isTTY) {
+        process.stdin.setRawMode(false);
+      }
+      process.stdin.pause();
     };
 
-    process.stdin.on("data", onData);
-
-    const watchdog = setTimeout(() => {
-      try { process.stdin.removeListener("data", onData); } catch (_) {}
-      safeSetRawMode(false);
-      try { process.stdin.pause(); } catch (_) {}
-      resolve();
-    }, 10 * 60 * 1000);
-
-    const originalResolve = resolve;
-    resolve = (...args) => {
-      clearTimeout(watchdog);
-      originalResolve(...args);
-    };
+    // 5. Attach listener
+    process.stdin.on('keypress', handler);
   });
 }
 
@@ -341,8 +316,8 @@ async function mainMenu() {
   `)
     );
     
-    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
     await downloadResume();
+    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
     await waitForBack();
     return mainMenu();
   }
@@ -365,7 +340,7 @@ async function mainMenu() {
   
     await open(`mailto:${data.contact.email}?subject=Hello%20KraVLonE`);
   
-    console.log(chalk.hex("#E90074")("\nPress ESC or Backspace to go back"));
+    console.log(chalk.hex("#E90074")("\nPress ESC to go back"));
     await waitForBack();
     return mainMenu();
   }
