@@ -1,0 +1,475 @@
+{
+  "_note": "Bundled fallback of raw API responses. Refresh with: npm run snapshot",
+  "fetchedAt": "2026-11-22T19:35:26.223Z",
+  "profile": {
+    "name": "B Sai Sannidh Rayalu",
+    "title": "Software Engineer",
+    "tagline": "Building production AI applications using Python, FastAPI, React and PostgreSQL.",
+    "bio_short": "Software Engineer who builds production AI applications using Python, FastAPI, React and PostgreSQL. Developed an ERP Copilot using RAG and LLM's to convert natural language question into SQL and retrieve business data. Experienced across backend development, Docker, AWS, and CI/CD, with a focus on building and deploying practical, production-ready systems.",
+    "email": "b.sai.sannidh@gmail.com",
+    "location": "Durg, Chhattisgarh",
+    "resume_url": "https://drive.google.com/file/d/1TdXXiV4yiivR3v13dGlCeSSYG3IrYi2-/view?usp=sharing",
+    "github_url": "https://github.com/KraVLonE",
+    "linkedin_url": "https://linkedin.com/in/b-sai-sannidh/",
+    "twitter_url": null,
+    "codeforces_card_url": "https://codeforces-stat-card.vercel.app/api/KraVLonE?theme=cyberpunk&ext=contest&border=0&subtext=ffffff",
+    "leetcode_card_url": "https://leetcard.jacoblin.cool/KraVLonE?theme=radical&font=Anek%20Tamil&ext=contest&border=0",
+    "id": 1,
+    "updated_at": "2026-11-22T19:21:20.210853"
+  },
+  "experience": [
+    {
+      "company": "Arpa Global Infotech Pvt Ltd",
+      "location": "Durg, Chhattisgarh",
+      "role": "Software Developer",
+      "start_date": "2025-08-01",
+      "end_date": null,
+      "pointers": [
+        "Architected and deployed an AI ERP Copilot using React, FastAPI, PostgreSQL, RAG, and LLMs, serving 60+ users across 2 enterprise clients.",
+        "Built hybrid dense + sparse RAG over 1,000+ tables and 30K+ columns for natural-language-to-SQL generation.",
+        "Optimized schema retrieval and context construction, reducing LLM prompt size by ~98% (150K+ → ~2K tokens).",
+        "Developed AI guardrails and evaluation pipelines covering SQL safety, RBAC, NLI, precision, recall, and F1.",
+        "Deployed enterprise applications using Docker, Nginx, AWS EC2, Jenkins, and GitHub Actions, reducing deployment time by 90%.",
+        "Migrated 82 SQL Server tables (~900 columns) to PostgreSQL, achieving 95% verified data fidelity."
+      ],
+      "tech_stack": [
+        "Python",
+        "FastAPI",
+        "React",
+        "PostgreSQL",
+        "LangChain",
+        "RAG",
+        "Docker",
+        "AWS",
+        "Jenkins",
+        "GitHub Actions"
+      ],
+      "order": 1,
+      "id": 2
+    }
+  ],
+  "projects": [
+    {
+      "title": "StockCraft",
+      "one_liner": "A full-stack paper trading platform supporting virtual trading and portfolio analytics.",
+      "location": "Durg, Chhattisgarh",
+      "date": "2024-05-01",
+      "pointers": [
+        "Built a full-stack paper trading platform using React, FastAPI, PostgreSQL, and Docker, supporting virtual trading and portfolio analytics.",
+        "Integrated the Upstox API for live market data and implemented event-driven workflows with RabbitMQ for asynchronous stock price alerts and notifications.",
+        "Engineered a modular backend following Clean Architecture, with RESTful APIs, PostgreSQL, JWT authentication, Docker, and asynchronous event-driven communication."
+      ],
+      "role": "Developer",
+      "tech_stack": [
+        "React",
+        "FastAPI",
+        "Docker",
+        "PostgreSQL",
+        "RabbitMQ",
+        "JWT"
+      ],
+      "links": {
+        "repo": "https://github.com/KraVLonE/StockCraft",
+        "live_demo": ""
+      },
+      "outcome": null,
+      "featured": true,
+      "order": 1,
+      "id": 7
+    },
+    {
+      "title": "Ganga Water Quality Forecast",
+      "one_liner": "A decision-support system that estimates and forecasts Ganga water quality (DO, BOD, fecal coliform) across 1,369 km from Haridwar to Patna.",
+      "location": "Durg, Chhattisgarh",
+      "date": "2026-11-01",
+      "pointers": [
+        "Built a 1-D river water-quality model (5 km cells, daily step) calibrated with differential evolution against monthly CPCB and UP Pollution Control Board lab measurements, parsed from PDF reports using Hindi/English OCR.",
+        "Generated 5-day ensemble forecasts (calibrated parameter sets × 50 GloFAS flow members) with uncertainty ranges, Telegram alerts, what-if pollution scenarios and hindcast verification.",
+        "Ingested river flow, ERA5 and forecast weather, Sentinel-2 turbidity and pollution-load inventories into PostgreSQL + TimescaleDB + PostGIS, served through FastAPI and a React + MapLibre dashboard, deployed with Docker behind Traefik."
+      ],
+      "role": "Developer",
+      "tech_stack": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "TimescaleDB",
+        "PostGIS",
+        "React",
+        "MapLibre",
+        "Docker"
+      ],
+      "links": {
+        "repo": "https://github.com/KraVLonE/SIH_Ganga",
+        "live_demo": "https://ganga.kravlone.xyz"
+      },
+      "outcome": "",
+      "featured": true,
+      "order": 1,
+      "id": 13
+    },
+    {
+      "title": "Geoguide",
+      "one_liner": "An autonomous robotic system combining Computer Vision, graph-based path planning, and embedded control.",
+      "location": "Durg, Chhattisgarh",
+      "date": "2024-02-01",
+      "pointers": [
+        "Developed an autonomous robotic system combining Computer Vision, graph-based path planning (Dijkstra's Algorithm), and embedded control for intelligent navigation in a dynamic arena.",
+        "Built a Computer Vision pipeline using PyTorch and OpenCV to detect disaster events from arena images, enabling autonomous event identification and prioritization.",
+        "Implemented ArUco marker-based localization to map the arena, estimate robot position and orientation, and dynamically reconstruct the navigation graph in real time."
+      ],
+      "role": "Developer",
+      "tech_stack": [
+        "Python",
+        "C++",
+        "Arduino",
+        "Pytorch",
+        "OpenCV",
+        "Sockets"
+      ],
+      "links": {
+        "repo": "https://github.com/KraVLonE/Geoguide",
+        "live_demo": "https://www.youtube.com/watch?v=jPzFFzKt_RI"
+      },
+      "outcome": null,
+      "featured": true,
+      "order": 2,
+      "id": 8
+    },
+    {
+      "title": "AI Traffic Optimization",
+      "one_liner": "A reinforcement learning-based intelligent traffic signal optimization system for reducing congestion and improving traffic flow.",
+      "location": "Durg, Chhattisgarh",
+      "date": "2023-11-01",
+      "pointers": [
+        "Developed a Reinforcement Learning-based traffic signal optimization system that dynamically adapts signal timings based on real-time traffic conditions.",
+        "Designed a traffic simulation environment with vehicle flow, queue lengths, waiting times, and signal states as the basis for learning an optimal control policy.",
+        "Implemented and evaluated an RL agent for intelligent signal control, optimizing traffic flow while minimizing vehicle waiting time and congestion."
+      ],
+      "role": "Developer",
+      "tech_stack": [
+        "Python",
+        "Reinforcement Learning",
+        "PyTorch",
+        "OpenCV",
+        "NumPy",
+        "SUMO"
+      ],
+      "links": {
+        "repo": "https://github.com/KraVLonE/Traffic-Control-Optimization",
+        "live_demo": "https://traffic-ai.kravlone.xyz"
+      },
+      "outcome": null,
+      "featured": true,
+      "order": 3,
+      "id": 9
+    },
+    {
+      "title": "Ambulance Management System",
+      "one_liner": "A real-time full-stack ambulance dispatch and routing system for intelligent emergency response.",
+      "location": "Durg, Chhattisgarh",
+      "date": "2023-09-01",
+      "pointers": [
+        "Developed a full-stack ambulance dispatching system that identifies the nearest available ambulance based on hospital availability and user location.",
+        "Implemented real-world road-network routing using OSRM and integrated Leaflet to visualize ambulance routes, hospital locations, and real-time dispatch operations.",
+        "Built a real-time multi-dispatch architecture using Socket.io, supporting concurrent ambulance requests with independent route animations and live availability updates."
+      ],
+      "role": "Developer",
+      "tech_stack": [
+        "React",
+        "Node.js",
+        "Express",
+        "Socket.io",
+        "Leaflet",
+        "Tailwind CSS",
+        "SQLite",
+        "OSRM"
+      ],
+      "links": {
+        "repo": "https://github.com/KraVLonE/Ambulance-Management-System",
+        "live_demo": "https://ambulance-management.kravlone.xyz"
+      },
+      "outcome": null,
+      "featured": true,
+      "order": 4,
+      "id": 10
+    },
+    {
+      "title": "ClipIn",
+      "one_liner": "A browser extension that saves LinkedIn profiles directly to a Notion referral tracking database.",
+      "location": "Durg, Chhattisgarh",
+      "date": "2025-06-01",
+      "pointers": [
+        "Developed a Chrome/Firefox browser extension that captures LinkedIn profile information and saves it directly to a Notion database in one click.",
+        "Implemented robust, layout-agnostic company detection to handle LinkedIn UI variations and automatically extract profile details including name, company, and LinkedIn URL.",
+        "Integrated the Notion API with configurable contact status and notes, enabling a streamlined workflow for tracking professional networking and referrals."
+      ],
+      "role": "Developer",
+      "tech_stack": [
+        "JavaScript",
+        "Chrome Extensions",
+        "Firefox Extensions",
+        "Notion API",
+        "HTML",
+        "CSS"
+      ],
+      "links": {
+        "repo": "https://github.com/KraVLonE/ClipIn",
+        "live_demo": "https://addons.mozilla.org/en-US/firefox/addon/clipin"
+      },
+      "outcome": null,
+      "featured": false,
+      "order": 5,
+      "id": 11
+    },
+    {
+      "title": "Telegram Notion Bot",
+      "one_liner": "An Telegram bot for managing Notion tasks through natural language.",
+      "location": "Durg, Chhattisgarh",
+      "date": "2025-04-01",
+      "pointers": [
+        "Developed a Telegram-based task management system that enables users to create, read, update, and delete Notion tasks using natural-language commands.",
+        "Integrated Google Gemini to parse natural-language instructions and extract structured task attributes including title, priority, due date, and status.",
+        "Built an interactive Telegram interface with quick-action buttons and containerized the application using Docker Compose for streamlined deployment."
+      ],
+      "role": "Developer",
+      "tech_stack": [
+        "Python",
+        "Google Gemini",
+        "Telegram Bot API",
+        "Notion API",
+        "Docker",
+        "Docker Compose"
+      ],
+      "links": {
+        "repo": "https://github.com/KraVLonE/Telegram_Bot_For_Notion_Task_Management"
+      },
+      "outcome": null,
+      "featured": false,
+      "order": 6,
+      "id": 12
+    }
+  ],
+  "skills": [
+    {
+      "name": "LangChain",
+      "category": "AI/ML",
+      "order": 1,
+      "id": 41
+    },
+    {
+      "name": "LangGraph",
+      "category": "AI/ML",
+      "order": 2,
+      "id": 42
+    },
+    {
+      "name": "MCP",
+      "category": "AI/ML",
+      "order": 3,
+      "id": 43
+    },
+    {
+      "name": "RAG",
+      "category": "AI/ML",
+      "order": 4,
+      "id": 44
+    },
+    {
+      "name": "ChromaDB",
+      "category": "AI/ML",
+      "order": 5,
+      "id": 45
+    },
+    {
+      "name": "OpenAI LLMs",
+      "category": "AI/ML",
+      "order": 6,
+      "id": 46
+    },
+    {
+      "name": "OpenCV",
+      "category": "AI/ML",
+      "order": 7,
+      "id": 47
+    },
+    {
+      "name": "Computer Vision",
+      "category": "AI/ML",
+      "order": 8,
+      "id": 48
+    },
+    {
+      "name": "Docker",
+      "category": "DevOps & Cloud",
+      "order": 1,
+      "id": 59
+    },
+    {
+      "name": "Git",
+      "category": "DevOps & Cloud",
+      "order": 2,
+      "id": 60
+    },
+    {
+      "name": "GitHub Actions",
+      "category": "DevOps & Cloud",
+      "order": 3,
+      "id": 61
+    },
+    {
+      "name": "Jenkins",
+      "category": "DevOps & Cloud",
+      "order": 4,
+      "id": 62
+    },
+    {
+      "name": "Linux",
+      "category": "DevOps & Cloud",
+      "order": 5,
+      "id": 63
+    },
+    {
+      "name": "AWS EC2",
+      "category": "DevOps & Cloud",
+      "order": 6,
+      "id": 64
+    },
+    {
+      "name": "Nginx",
+      "category": "DevOps & Cloud",
+      "order": 7,
+      "id": 65
+    },
+    {
+      "name": "CI/CD",
+      "category": "DevOps & Cloud",
+      "order": 8,
+      "id": 66
+    },
+    {
+      "name": "Python",
+      "category": "Languages",
+      "order": 1,
+      "id": 34
+    },
+    {
+      "name": "C/C++",
+      "category": "Languages",
+      "order": 2,
+      "id": 35
+    },
+    {
+      "name": "JavaScript",
+      "category": "Languages",
+      "order": 3,
+      "id": 36
+    },
+    {
+      "name": "TypeScript",
+      "category": "Languages",
+      "order": 4,
+      "id": 37
+    },
+    {
+      "name": "Bash",
+      "category": "Languages",
+      "order": 5,
+      "id": 38
+    },
+    {
+      "name": "SQL",
+      "category": "Languages",
+      "order": 6,
+      "id": 39
+    },
+    {
+      "name": "HTML/CSS",
+      "category": "Languages",
+      "order": 7,
+      "id": 40
+    },
+    {
+      "name": "FastAPI",
+      "category": "Software Engineering",
+      "order": 1,
+      "id": 49
+    },
+    {
+      "name": "Node.js",
+      "category": "Software Engineering",
+      "order": 2,
+      "id": 50
+    },
+    {
+      "name": "React",
+      "category": "Software Engineering",
+      "order": 3,
+      "id": 51
+    },
+    {
+      "name": "REST APIs",
+      "category": "Software Engineering",
+      "order": 4,
+      "id": 52
+    },
+    {
+      "name": "JWT",
+      "category": "Software Engineering",
+      "order": 5,
+      "id": 53
+    },
+    {
+      "name": "PostgreSQL",
+      "category": "Software Engineering",
+      "order": 6,
+      "id": 54
+    },
+    {
+      "name": "MySQL",
+      "category": "Software Engineering",
+      "order": 7,
+      "id": 55
+    },
+    {
+      "name": "Redis",
+      "category": "Software Engineering",
+      "order": 8,
+      "id": 56
+    },
+    {
+      "name": "RabbitMQ",
+      "category": "Software Engineering",
+      "order": 9,
+      "id": 57
+    },
+    {
+      "name": "SQLAlchemy",
+      "category": "Software Engineering",
+      "order": 10,
+      "id": 58
+    }
+  ],
+  "achievements": [
+    {
+      "title": "TCS CodeVita",
+      "description": "Achieved Global Rank 1844 among 537,000+ participants.",
+      "date": null,
+      "order": 1,
+      "id": 1
+    },
+    {
+      "title": "Smart India Hackathon 2024 Finalist",
+      "description": "Developed a sustainable Ganga River Water Quality Forecast model.",
+      "date": null,
+      "order": 2,
+      "id": 2
+    },
+    {
+      "title": "E-Yantra Robotics Competition 2023–24 Finalist",
+      "description": "Ranked top 30 among 4,000+ teams in an IIT Bombay challenge.",
+      "date": null,
+      "order": 3,
+      "id": 3
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "_note": "Card-only fields the portfolio backend doesn't store. Edit here, then publish.",
+  "handle": "KraVLonE",
+  "philosophy": "Automate everything • Script the world",
+  "interests": ["Linux", "Space & Science", "Chess", "Competitive Programming", "Psychology", "Travelling"],
+  "currentWork": ["Building ERP UI", "DevOps Pipelines", "Stock Trading Simulation", "Exploring Deep Learning & System Design"],
+  "linux": [
+    { "label": "Distro", "value": "Debian" },
+    { "label": "DE/WM", "value": "GNOME + Forge" },
+    { "label": "Scripting", "value": "Bash • Automation" },
+    { "label": "Philosophy", "value": "If I can script it, I will." }
+  ],
+  "extraLinks": [
+    { "label": "Website", "value": "https://kravlone.xyz" },
+    { "label": "Blog", "value": "https://blog.kravlone.xyz" }
+  ]
+}
