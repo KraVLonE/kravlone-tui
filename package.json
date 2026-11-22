@@ -17,7 +17,7 @@
   "license": "ISC",
   "type": "module",
   "bin": {
-    "kravlone": "./index.js"
+    "kravlone": "index.js"
   },
   "dependencies": {
     "boxen": "^8.0.1",
